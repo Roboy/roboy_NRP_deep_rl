@@ -10,23 +10,24 @@ Install NRP https://bitbucket.org/hbpneurorobotics/neurorobotics-platform.
 This may take a few hours - mind the advice on not using pip package versions.
 
 Create virtual environment for deep reinforcement learning packages. https://virtualenv.pypa.io/en/stable/ 
-Avoid using "sudo" to install packages in the venv.
-Make sure to isolate using '--no-site-packages'.
+Avoid using 'sudo' to install packages in the venv.
+Make sure to isolate using '--no-site-packages'
 
 In the virtual environment created:
   * Install tensorflow https://www.tensorflow.org/install/install_linux for Keras backend
 
   * Install keras-rl https://github.com/keras-rl/keras-rl
 
-  * Install h5py (required to save Keras models to disk).
-  'pip install h5py'
+  * Install h5py (required to save Keras models to disk)  'pip install h5py'
 
 ## Workaround(s) 
 
 Protobuf Error when starting experiment in NRP
 
-''' pip uninstall protobuf 
-pip install protobuf --version 3.4 '''
+'''
+pip uninstall protobuf 
+pip install protobuf --version 3.4
+'''
 
 
 ## Experiment related files/folders
