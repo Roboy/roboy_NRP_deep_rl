@@ -10,7 +10,7 @@ Install NRP https://bitbucket.org/hbpneurorobotics/neurorobotics-platform.
 This may take a few hours - mind the advice on not using pip package versions.
 
 Create virtual environment for deep reinforcement learning packages. https://virtualenv.pypa.io/en/stable/ 
-Avoid using ' sudo ' to install packages in the venv.
+Avoid using "sudo" to install packages in the venv.
 Make sure to isolate using '--no-site-packages'.
 
 In the virtual environment created:
@@ -35,10 +35,10 @@ Add ' myoarm_nst_rl/ ' folder ' NRP/Experiments ' folder.
 The ' .exc ' file which specifies the environment model and physics engine for the simulation.  To speed up development, the ' <maturity> ' attribute has been set to ' production ' so that the experiment shows up in the main set of NRP experiment templates.
 The ' .bibi ' file specifies the transfer functions, or python scripts executed every step of the simulation.
 
-Place ' model.sdf ' in the ' NRP/Models/myoarm_nst/ ' and replace the existing file of the same name
+Place 'model.sdf ' in the ' NRP/Models/myoarm_nst/ ' and replace the existing file of the same name
 
 In initDRLAgent.py:
-  *Change the addsite path to that of the virtual env created. You may find more details in the corresponding tutorial for using tensorflow in the NRP [here].(https://developer.humanbrainproject.eu/docs/projects/HBP%20Neurorobotics%20Platform/1.2/nrp/tutorials/tensorflow/tutorial.html#installing-tensorflow-for-use-in-the-nrp)
+  *Change the addsite path to that of the virtual env created. You may find more details in the corresponding tutorial for using tensorflow in the NRP [here](https://developer.humanbrainproject.eu/docs/projects/HBP%20Neurorobotics%20Platform/1.2/nrp/tutorials/tensorflow/tutorial.html#installing-tensorflow-for-use-in-the-nrp)
 
   *Change the path from where the saved model weights should be loaded. By default this should be the experiment folder 'myoarm_nst_rl/'
 
