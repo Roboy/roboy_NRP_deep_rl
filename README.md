@@ -3,7 +3,7 @@ Deep reinforcement learning for controlling myorobotics muscles in the Neurorobo
 
 ## Dependencies
 
-Please Note: The following assumes you are running without gpu support. 
+Please nnte: The following assumes you are running without gpu support. 
 Tested on Ubuntu 16.04.
 
 Install NRP https://bitbucket.org/hbpneurorobotics/neurorobotics-platform.
