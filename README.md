@@ -48,7 +48,7 @@ In order to get joint information from the simulation, replace `NRP/GazeboRosPac
 
 ## Setting up D-RL Agent
  
-keras-rl provides a DDPG (Deep Deterministic Policy Gradient) agent which uses two function approximating neural nets - actor and critic.  It is suitable for control tasks where the action space is continous, and the state space high-dimensional. The task here is similar to the canonical inverted-pendulum task for reinforcement learning agents. Although the state and action spaces may not be very large here, this experiment serves as a prototype for using keras-rl in the NRP to control more complex locomotion of Roboy's myomuscle legs.   
+`keras-rl` provides a DDPG (Deep Deterministic Policy Gradient) agent which uses two function approximating neural nets - actor and critic.  It is suitable for control tasks where the action space is continous, and the state space high-dimensional. The task here is similar to the canonical inverted-pendulum task for reinforcement learning agents. Although the state and action spaces may not be very large here, this experiment serves as a prototype for using keras-rl in the NRP to control more complex locomotion of Roboy's myomuscle legs.   
 
 * Action space: 4 muscle activation commands - left top, left bottom, right top, right bottom
 
@@ -61,7 +61,7 @@ The DDPG agent actor net takes state information as input and outputs an action 
 
 The networks are trained w.r.t. the minimization of a loss function derived from the difference between the actual reward experienced and reward it predicts, plus a factor of action entropy for exploration.
 
-A keras-rl agent usually takes the the simulation/environment as an object and updates itself while stepping through it.  In this implementation, the NRP takes the agent as an object (so to say), steps itself, and updates the agent along the way.  The roles of the stepper are reversed, as seen in the image below.  
+A `keras-rl` agent usually takes the the simulation/environment as an object and updates itself while stepping through it.  In this implementation, the NRP takes the agent as an object (so to say), steps itself, and updates the agent along the way.  The roles of the stepper are reversed, as seen in the image below.  
 
 ![alt text](https://github.com/Roboy/roboy_NRP_deep_rl/blob/master/VR-DeepRLinNRP.jpg)
 
@@ -69,7 +69,7 @@ A keras-rl agent usually takes the the simulation/environment as an object and u
 #### Other Agent Parameters
 The agent bookkeeps with the `SequentialMemory()` so its important to have enough declared.  
 
-keras-rl's network warm-up cycles are ignored in this usage.
+`keras-rl`'s network warm-up cycles (`nb_steps_warmup_critic`, `nb_steps_warmup_actor`) are not used.
 
 
 ## Running the experiment 
