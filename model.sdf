@@ -1,0 +1,152 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+	<model name="myoarm_nst">
+		<muscles>model://myoarm_nst/muscles.osim</muscles>
+		<link name="table">
+			<pose>0.0 0.0 0.0 1.5707963705062866 -0.0 0.0</pose>
+			<inertial>
+				<mass>1.0</mass>
+				<pose>0.0 0.0 0.0 3.141592502593994 -0.0 0.0</pose>
+				<inertia>
+					<ixx>1.0</ixx>
+					<ixy>0.0</ixy>
+					<ixz>0.0</ixz>
+					<iyy>1.0</iyy>
+					<iyz>0.0</iyz>
+					<izz>1.0</izz>
+				</inertia>
+			</inertial>
+			<visual name="VIS_table">
+				<pose>0.0 0.506493091583252 -8.25181984964729e-08 -1.5707964897155762 -0.0 0.0</pose>
+				<pose>0.0 0.0 0.0 3.141592502593994 -0.0 0.0</pose>
+				<geometry>
+					<mesh>
+						<uri>model://myoarm_nst/meshes/visual/VIS_table.dae</uri>
+						<scale>1.0 1.0 1.0</scale>
+					</mesh>
+				</geometry>
+			</visual>
+		</link>
+		<link name="HoldingFrame">
+			<pose>0.0 -6.40229519012e-06 1.00498998165 1.5707963705062866 -0.0 0.0</pose>
+			<inertial>
+				<mass>20.6792</mass>
+				<pose>0.0 -0.004989981651306152 -6.402076905942522e-06 -1.5707963705062866 -0.0 0.0</pose>
+				<inertia>
+					<ixx>0.1935</ixx>
+					<ixy>0.0</ixy>
+					<ixz>0.0002</ixz>
+					<iyy>0.9382</iyy>
+					<iyz>-0.0005</iyz>
+					<izz>0.7965</izz>
+				</inertia>
+			</inertial>
+			<visual name="VIS_HoldingFrame">
+				<pose>0.0 1.1920957376787555e-07 -1.0658141036401503e-14 -6.245003835890148e-14 -0.0 0.0</pose>
+				<pose>-6.141581252450123e-05 -1.0339559316635132 1.0052673816680908 3.141592502593994 -0.0 0.0</pose>
+				<geometry>
+					<mesh>
+						<uri>model://myoarm_nst/meshes/visual/VIS_HoldingFrame.dae</uri>
+						<scale>0.0010000000474974513 0.0010000000474974513 0.0010000000474974513</scale>
+					</mesh>
+				</geometry>
+			</visual>
+		</link>
+		<link name="HumerusBone">
+			<pose>-0.000539999979082 -0.0168567138839 1.053999874 1.5707963705062866 -0.0 0.0</pose>
+			<inertial>
+				<mass>2.3542</mass>
+				<pose>0.000539999979082495 0.20000038146973 -0.016856778413057327 -1.5707963705062866 -0.0 0.0</pose>
+				<inertia>
+					<ixx>0.4991</ixx>
+					<ixy>-0.316</ixy>
+					<ixz>0.041</ixz>
+					<iyy>0.2367</iyy>
+					<iyz>0.0264</iyz>
+					<izz>0.7157</izz>
+				</inertia>
+			</inertial>
+			<visual name="VIS_HumerusBone">
+				<pose>-5.54544385522604e-07 1.1994612236776447e-07 6.082260028961173e-09 -2.265664136302803e-07 3.1310214865243324e-08 0.5759587287902832</pose>
+				<pose>0.9980682134628296 -0.8001264333724976 1.0325278043746948 3.141592502593994 0.12217305600643158 0.698131799697876</pose>
+				<geometry>
+					<mesh>
+						<uri>model://myoarm_nst/meshes/visual/VIS_HumerusBone.dae</uri>
+						<scale>0.0010000000474974513 0.0010000000474974513 0.0010000000474974513</scale>
+					</mesh>
+				</geometry>
+			</visual>
+		</link>
+		<link name="RadiusBone">
+			<pose>-0.000539999979082 0.0186109776662 1.4839998827 1.5707963705062866 -0.0 0.0</pose>
+			<inertial>
+				<mass>1.5068</mass>
+				<pose>0.0005399999208748341 0.20001277923584 0.018610898405313492 -1.5707963705062866 -0.0 0.0</pose>
+				<inertia>
+					<ixx>1.0</ixx>
+					<ixy>0.0</ixy>
+					<ixz>0.0</ixz>
+					<iyy>1.0</iyy>
+					<iyz>0.0</iyz>
+					<izz>1.0</izz>
+				</inertia>
+			</inertial>
+			<visual name="VIS_RadiusBone">
+				<pose>1.607113517820835e-07 1.183957749617548e-07 7.775454946568061e-09 -2.709087539187749e-06 -1.9988910082702205e-07 -0.9948384165763855</pose>
+				<pose>1.770756483078003 -0.3644533157348633 0.20604144036769867 1.7902381159728975e-06 1.4486231803894043 -2.4434592723846436</pose>
+				<geometry>
+					<mesh>
+						<uri>model://myoarm_nst/meshes/visual/VIS_RadiusBone.dae</uri>
+						<scale>0.0009999999310821295 0.0010000000474974513 0.0010000000474974513</scale>
+					</mesh>
+				</geometry>
+			</visual>
+		</link>
+		<joint name="HoldingFrameJoint" type="fixed">
+			<parent>table</parent>
+			<child>HoldingFrame</child>
+			<axis>
+				<xyz>0.0 1.0 0.0</xyz>
+				<use_parent_model_frame>true</use_parent_model_frame>
+				<limit/>
+			</axis>
+		</joint>
+		<joint name="HumerusBoneJoint" type="revolute">
+			<parent>HoldingFrame</parent>
+			<child>HumerusBone</child>
+			<axis>
+				<xyz>0.0 1.0 0.0</xyz>
+				<use_parent_model_frame>true</use_parent_model_frame>
+				<limit>
+					<lower>-0.8</lower>
+					<upper>0.8</upper>
+				</limit>
+				<dynamics>
+					<damping>0.7</damping>
+				</dynamics>
+
+			</axis>
+		</joint>
+		<joint name="RadiusBoneJoint" type="revolute">
+			<parent>HumerusBone</parent>
+			<child>RadiusBone</child>
+			<axis>
+				<xyz>0.0 1.0 0.0</xyz>
+				<use_parent_model_frame>true</use_parent_model_frame>
+				<limit>
+					<lower>-0.7</lower>
+					<upper>0.7</upper>
+				</limit>
+				<dynamics>
+					<damping>0.7</damping>
+				</dynamics>
+			</axis>
+		</joint>
+		<joint name="world" type="fixed">
+			<parent>world</parent>
+			<child>table</child>
+
+		</joint>
+		<plugin filename="libgazebo_ros_muscle_interface.so" name="muscle_interface_plugin"/>
+	</model>
+</sdf>
