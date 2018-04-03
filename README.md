@@ -4,7 +4,7 @@ _Deep reinforcement learning for controlling myorobotics muscles in the Neurorob
 
 ## Dependencies
 
-Please note: The following assumes you are running without gpu support.  Tested on Ubuntu 16.04.
+Please note: the following assumes no gpu support.  Tested on Ubuntu 16.04.
 
 Install NRP https://bitbucket.org/hbpneurorobotics/neurorobotics-platform.  This may take a few hours - mind the advice on not using pip package versions.
 
@@ -20,7 +20,7 @@ In the venv:
 
 ## Workaround(s) 
 
-Protobuf Error when starting experiment in NRP
+Protobuf Error when starting experiment in NRP:
 
 ```
 pip uninstall protobuf 
@@ -29,11 +29,11 @@ pip install protobuf --version 3.4
 
 ## Experiment related files/folders
 
-Add `myoarm_nst_rl/` folder `NRP/Experiments` folder.
+Copy `myoarm_nst_rl/` folder to the `NRP/Experiments` folder.
 * The `.exc` file which specifies the environment model and physics engine for the simulation.  To speed up development, the `<maturity>` attribute has been set to `production` so that the experiment shows up in the main set of NRP experiment templates.
 * The `.bibi` file specifies the transfer functions, or python scripts executed every step of the simulation.
 
-Place `model.sdf` in the `NRP/Models/myoarm_nst/` and replace the existing file of the same name
+Replace `model.sdf` in the `NRP/Models/myoarm_nst/` folder.
 
 In `initDRLAgent.py`:
 * Change the addsite path to that of the virtual env created. You may find more details in the corresponding tutorial for using `tensorflow` in the NRP [here](https://developer.humanbrainproject.eu/docs/projects/HBP%20Neurorobotics%20Platform/1.2/nrp/tutorials/tensorflow/tutorial.html#installing-tensorflow-for-use-in-the-nrp).
@@ -59,7 +59,7 @@ keras-rl provides a DDPG (Deep Deterministic Policy Gradient) agent which uses t
 
 The DDPG agent actor net takes state information as input and outputs an action - the 4 muscle commands. The critics takes the action and state as an input and outputs an value function estimate.  The paper can be found [here](https://arxiv.org/abs/1509.02971).
 
-The networks are trained w.r.t. the minimization of a loss function derived from the difference between the actual reward experienced and reward it predicts, plus a factor of entropy for exploration.
+The networks are trained w.r.t. the minimization of a loss function derived from the difference between the actual reward experienced and reward it predicts, plus a factor of action entropy for exploration.
 
 A keras-rl agent usually takes the the simulation/environment as an object and updates itself while stepping through it.  In this implementation, the NRP takes the agent as an object (so to say), steps itself, and updates the agent along the way.  The roles of the stepper are reversed, as seen in the image below.  
 
