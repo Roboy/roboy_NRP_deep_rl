@@ -4,21 +4,21 @@ Deep reinforcement learning for controlling myorobotics muscles in the Neurorobo
 ## Dependencies
 
 Please Note: The following assumes you are running without gpu support. 
-Tested on Ubuntu 16.04
+Tested on Ubuntu 16.04.
 
-Install NRP https://bitbucket.org/hbpneurorobotics/neurorobotics-platform
-This may take a few hours - mind the advice on not using pip package versions
+Install NRP https://bitbucket.org/hbpneurorobotics/neurorobotics-platform.
+This may take a few hours - mind the advice on not using pip package versions.
 
 Create virtual environment for deep reinforcement learning packages. https://virtualenv.pypa.io/en/stable/ 
 Avoid using 'sudo' to install packages in the venv.
-Make sure to isolate using '--no-site-packages'
+Make sure to isolate using '--no-site-packages'.
 
 In the virtual environment created:
-..*Install tensorflow https://www.tensorflow.org/install/install_linux for Keras backend
+*Install tensorflow https://www.tensorflow.org/install/install_linux for Keras backend
 
-..*Install keras-rl https://github.com/keras-rl/keras-rl
+*Install keras-rl https://github.com/keras-rl/keras-rl
 
-..*Install h5py (required to save Keras models to disk).
+*Install h5py (required to save Keras models to disk).
 'pip install h5py'
 
 ## Workaround(s) 
@@ -38,12 +38,12 @@ The .bibi file specifies the transfer functions, or python scripts executed ever
 Place 'model.sdf' in the 'NRP/Models/myoarm_nst/' and replace the existing file of the same name
 
 In initDRLAgent.py:
-..*Change the addsite path to that of the virtual env created. You may find more details in the corresponding tutorial for using tensorflow in the NRP [here](https://developer.humanbrainproject.eu/docs/projects/HBP%20Neurorobotics%20Platform/1.2/nrp/tutorials/tensorflow/tutorial.html#installing-tensorflow-for-use-in-the-nrp)
+*Change the addsite path to that of the virtual env created. You may find more details in the corresponding tutorial for using tensorflow in the NRP [here].(https://developer.humanbrainproject.eu/docs/projects/HBP%20Neurorobotics%20Platform/1.2/nrp/tutorials/tensorflow/tutorial.html#installing-tensorflow-for-use-in-the-nrp)
 
-..*Change the path from where the saved model weights should be loaded. By default this should be the experiment folder 'myoarm_nst_rl/'
+*Change the path from where the saved model weights should be loaded. By default this should be the experiment folder 'myoarm_nst_rl/'
 
 In controller.py:
-..*Change the path to where the model weights should be saved.  By default this should be the experiment folder 'myoarm_nst_rl/'
+*Change the path to where the model weights should be saved.  By default this should be the experiment folder 'myoarm_nst_rl/'
 
 In order to get joint information from the simulation, replace 'NRP/GazeboRosPackages/src/gazebo_muscle_plugin/' with the one here. Be aware that this plugin assumes the use of the myoarm **model.sdf** and uses string names of joints to get information. Making this more general is a work in progress.
 
