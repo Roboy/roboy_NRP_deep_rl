@@ -11,7 +11,7 @@ This may take a few hours - mind the advice on not using pip package versions.
 
 Create virtual environment for deep reinforcement learning packages. https://virtualenv.pypa.io/en/stable/ 
 Avoid using ' sudo ' to install packages in the venv.
-Make sure to isolate using ' --no-site-packages '.
+Make sure to isolate using '--no-site-packages'.
 
 In the virtual environment created:
   * Install tensorflow https://www.tensorflow.org/install/install_linux for Keras backend
@@ -19,7 +19,7 @@ In the virtual environment created:
   * Install keras-rl https://github.com/keras-rl/keras-rl
 
   * Install h5py (required to save Keras models to disk).
-  ' pip install h5py '
+  'pip install h5py'
 
 ## Workaround(s) 
 
@@ -66,7 +66,7 @@ A keras-rl agent usually takes the the simulation/environment as an object and u
 (https://github.com/Roboy/roboy_NRP_deep_rl/blob/master/VR-DeepRLinNRP.jpg)
 
 
-# Other Agent Parameters
+### Other Agent Parameters
 The agent bookkeeps with the 'SequentialMemory()' so its important to have enough declared.  
 
 keras-rl's network warm-up cycles are ignored in this usage.
