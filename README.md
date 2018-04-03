@@ -1,69 +1,72 @@
 # roboy_NRP_deep_rl
-Deep reinforcement learning for controlling Myorobotics muscles in the `Neurorobotics Platform`
+Deep reinforcement learning for controlling myorobotics muscles in the Neurorobotics Platform (NRP)
+
+## Dependencies
+
+Please Note: The following assumes you are running without gpu support. 
+Tested on Ubuntu 16.04
+
+Install NRP https://bitbucket.org/hbpneurorobotics/neurorobotics-platform
+This may take a few hours - mind the advice on not using pip package versions
+
+Create virtual environment for deep reinforcement learning packages. https://virtualenv.pypa.io/en/stable/ 
+Avoid using 'sudo' to install packages in the venv.
+Make sure to isolate using '--no-site-packages'
+
+In the virtual environment created:
+..*Install tensorflow https://www.tensorflow.org/install/install_linux for Keras backend
+
+..*Install keras-rl https://github.com/keras-rl/keras-rl
+
+..*Install h5py (required to save Keras models to disk).
+'pip install h5py'
+
+## Workaround(s) 
+
+Protobuf Error when starting experiment in NRP
+
+'pip uninstall protobuf 
+pip install protobuf --version 3.4'
 
 
-This assumes you are running without gpu support. 
-Dependencies
+## Experiment related files/folders
 
-install NRP https://bitbucket.org/hbpneurorobotics/neurorobotics-platform
+Add 'myoarm_nst_rl/' folder 'NRP/Experiments' folder.  
+The .exc file which specifies the environment model and physics engine for the simulation.  To speed up development, the '<maturity>' attribute has been set to 'production' so that the experiment shows up in the main set of NRP experiment templates.
+The .bibi file specifies the transfer functions, or python scripts executed every step of the simulation.
 
-this may take a few hours - mind the advice on not using pip package versions
+Place 'model.sdf' in the 'NRP/Models/myoarm_nst/' and replace the existing file of the same name
 
-create virtual environment for deep rl packages 
-avoid using sudo to pip install packages in the venv
+In initDRLAgent.py:
+..*Change the addsite path to that of the virtual env created. You may find more details in the corresponding tutorial for using tensorflow in the NRP [here](https://developer.humanbrainproject.eu/docs/projects/HBP%20Neurorobotics%20Platform/1.2/nrp/tutorials/tensorflow/tutorial.html#installing-tensorflow-for-use-in-the-nrp)
 
-install keras-rl https://github.com/keras-rl/keras-rl
+..*Change the path from where the saved model weights should be loaded. By default this should be the experiment folder 'myoarm_nst_rl/'
 
-HDF5 and h5py (required to save Keras models to disk).
+In controller.py:
+..*Change the path to where the model weights should be saved.  By default this should be the experiment folder 'myoarm_nst_rl/'
 
-install tensorflow https://www.tensorflow.org/install/install_linux
-If you wish to use GPU support you may need to install 
-cuDNN (recommended if you plan on running Keras on GPU).
+In order to get joint information from the simulation, replace 'NRP/GazeboRosPackages/src/gazebo_muscle_plugin/' with the one here. Be aware that this plugin assumes the use of the myoarm **model.sdf** and uses string names of joints to get information. Making this more general is a work in progress.
 
 
-----
-workaround - potential protobuf error with NRP
-
-pip uninstall protobuf 3.5 
-pip install protobuf 3.4
-
-https://virtualenv.pypa.io/en/stable/
-
-add myoarm folder with files to the NRP/Experiments folder.  
-This has the .exd file which defines the environment and loads the model of the myoarm, which is located in 
-NRP/Models/myoarm_nst in the install
-to speed up development changed the maturity attribute to 'production' so that the experiment shows up in the main NRP Browser window
-
-.bibi file used to add the transfer functions, amongst other things
-
-change the path to that of the virtual env in initDRLagent.py the corresponding tutorial for using tensorflow in the nrp can be found here https://developer.humanbrainproject.eu/docs/projects/HBP%20Neurorobotics%20Platform/1.2/nrp/tutorials/tensorflow/tutorial.html#installing-tensorflow-for-use-in-the-nrp
+## Setting up D-RL Agent
  
-if you are not familiar with keras-rl, there are some parameters to set in the initDRLagent
+keras-rl provides a DDPG (Deep Deterministic Policy Gradient) agent which uses two function approximating neural nets - actor and critic.  It is suitable for control tasks where the action space is continous, and the state space high-dimensional. The task here is similar to the canonical inverted-pendulum task for reinforcement learning agents. Although the state and action spaces may not be very large here, this experiment serves as a prototype for using keras-rl in the NRP to control more complex locomotion of Roboy's myomuscle legs.   
 
+Action space: 4 muscle activation commands, left top, left bottom, right top, right bottom and outputs are specified in The State space: angle and angular velocities of both joints.
+(The sizes, shapes are stored in 'nb_actions' and 'obs_shape' respectively.) 
 
-The DDPG Agent
-keras-rl provides a DDPG (Deep Deterministic Policy Gradient) agent which use two function approximating neural nets- actor and critic.  It is designed to be trained It requires the following information from the NRP Simulation to intereact with it.  
+The reward is computed as the negative sum of the angles, angle velocities, and muscle commands, for which the maximum reward is achieved when the arm stands straight up (like the inverted pendulum, and uses minimal muscle effort to do so.  
 
-Observation is composed joint angles and angular velocity of both joints.  
+The DDPG agent actor net takes state information as input and outputs an action - the 4 muscle commands. The critics takes the action and state as an input and outputs an value function estimate.  The paper can be found [here]. (https://arxiv.org/abs/1509.02971)
 
-The shapes of both inputs and outputs are specified in nb_actions nb_obs
+The networks are trained based upon the minimization of a loss function derived from the difference between the actual reward experienced and reward it predicts, plus a factor of entropy for exploration.
 
-The gazebo plugin used for the myoarm 2 DOF model does not publish the joint information so the gazebo file must be replaced with the given.  Be aware that this plugin assumes the use of the myoarm model because it uses string names of joints to get information from the simulation. Making this more general is a work in progress.
+The agent bookkeeps with the 'SequentialMemory()' so its important to have enough declared.  
 
+keras-rl has network warm-up cycles which is ignored in this usage.
 
-The actor takes the observation from the nrp as input composed of joint angles and outputs an action - 4 muscle commands. 
-
-The critics takes the action and observation as an input and outputs an state value estimate.  
-
-The networks are trained based upon the differences between the actual reward experienced and reward it predicts, plus a factor of entropy for exploration. 
-
-explain reward - inverted pendulum 
-
-The agent bookkeeps with the Sequential Memory so its important to have enough declared.  
-
-you may start the nrp as directed in the link provided above
-
-
+## Running the experiment 
+Please refer to the NRP documentation to get it up and running and to run the experiment.  
 
 
 
