@@ -26,7 +26,7 @@ In the virtual environment created:
 
 Protobuf Error when starting experiment in NRP
 
-```python
+```
 pip uninstall protobuf 
 pip install protobuf --version 3.4
 ```
@@ -47,7 +47,7 @@ In `initDRLAgent.py`:
 In `controller.py`:
   * Change the path to where the model weights should be saved.  By default this should be the experiment folder `myoarm_nst_rl/`
 
-In order to get joint information from the simulation, replace `NRP/GazeboRosPackages/src/gazebo_muscle_plugin/` with the one here. Be aware that this plugin assumes the use of the myoarm **model.sdf** and uses string names of joints to get information. Making this more general is a work in progress.
+In order to get joint information from the simulation, replace `NRP/GazeboRosPackages/src/gazebo_muscle_plugin/` with the one here. Be aware that this plugin assumes the use of the myoarm `model.sdf` and uses string names of joints to get information. Making this more general is a work in progress.
 
 
 ## Setting up D-RL Agent
@@ -67,14 +67,15 @@ The networks are trained based upon the minimization of a loss function derived 
 
 A keras-rl agent usually takes the the simulation/environment as an object and updates itself while stepping through it.  In this implementation, the NRP takes the agent as an object (so to say), steps itself, and updates the agent along the way.  The roles of the stepper are reversed, as seen in the image below.  
 
-[Image](https://github.com/Roboy/roboy_NRP_deep_rl/blob/master/VR-DeepRLinNRP.jpg)
+Inline-style:
+![alt text](https://github.com/Roboy/roboy_NRP_deep_rl/blob/master/VR-DeepRLinNRP.jpg)
 
 
-### Other Agent Parameters
+#### Other Agent Parameters
 The agent bookkeeps with the `SequentialMemory()` so its important to have enough declared.  
 
 keras-rl's network warm-up cycles are ignored in this usage.
 
 
 ## Running the experiment 
-Please refer to the NRP documentation to get it up and running and to execute the experiment.  
+Please refer to the NRP [documentation](https://bitbucket.org/hbpneurorobotics/neurorobotics-platform) to get it up and running and to execute the experiment.  
