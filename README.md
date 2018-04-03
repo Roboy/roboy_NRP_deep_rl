@@ -3,39 +3,39 @@ Deep reinforcement learning for controlling myorobotics muscles in the Neurorobo
 
 ## Dependencies
 
-Please nnte: The following assumes you are running without gpu support. 
+Please note: The following assumes you are running without gpu support. 
 Tested on Ubuntu 16.04.
 
 Install NRP https://bitbucket.org/hbpneurorobotics/neurorobotics-platform.
 This may take a few hours - mind the advice on not using pip package versions.
 
 Create virtual environment for deep reinforcement learning packages. https://virtualenv.pypa.io/en/stable/ 
-Avoid using 'sudo' to install packages in the venv.
-Make sure to isolate using '--no-site-packages'.
+Avoid using ' sudo ' to install packages in the venv.
+Make sure to isolate using ' --no-site-packages '.
 
 In the virtual environment created:
-  *Install tensorflow https://www.tensorflow.org/install/install_linux for Keras backend
+  * Install tensorflow https://www.tensorflow.org/install/install_linux for Keras backend
 
-  *Install keras-rl https://github.com/keras-rl/keras-rl
+  * Install keras-rl https://github.com/keras-rl/keras-rl
 
-  *Install h5py (required to save Keras models to disk).
-  'pip install h5py'
+  * Install h5py (required to save Keras models to disk).
+  ' pip install h5py '
 
 ## Workaround(s) 
 
 Protobuf Error when starting experiment in NRP
 
-'''pip uninstall protobuf 
-pip install protobuf --version 3.4'''
+''' pip uninstall protobuf 
+pip install protobuf --version 3.4 '''
 
 
 ## Experiment related files/folders
 
-Add 'myoarm_nst_rl/' folder 'NRP/Experiments' folder.  
-The .exc file which specifies the environment model and physics engine for the simulation.  To speed up development, the '<maturity>' attribute has been set to 'production' so that the experiment shows up in the main set of NRP experiment templates.
-The .bibi file specifies the transfer functions, or python scripts executed every step of the simulation.
+Add ' myoarm_nst_rl/ ' folder ' NRP/Experiments ' folder.  
+The ' .exc ' file which specifies the environment model and physics engine for the simulation.  To speed up development, the ' <maturity> ' attribute has been set to ' production ' so that the experiment shows up in the main set of NRP experiment templates.
+The ' .bibi ' file specifies the transfer functions, or python scripts executed every step of the simulation.
 
-Place 'model.sdf' in the 'NRP/Models/myoarm_nst/' and replace the existing file of the same name
+Place ' model.sdf ' in the ' NRP/Models/myoarm_nst/ ' and replace the existing file of the same name
 
 In initDRLAgent.py:
   *Change the addsite path to that of the virtual env created. You may find more details in the corresponding tutorial for using tensorflow in the NRP [here].(https://developer.humanbrainproject.eu/docs/projects/HBP%20Neurorobotics%20Platform/1.2/nrp/tutorials/tensorflow/tutorial.html#installing-tensorflow-for-use-in-the-nrp)
@@ -53,7 +53,7 @@ In order to get joint information from the simulation, replace 'NRP/GazeboRosPac
 keras-rl provides a DDPG (Deep Deterministic Policy Gradient) agent which uses two function approximating neural nets - actor and critic.  It is suitable for control tasks where the action space is continous, and the state space high-dimensional. The task here is similar to the canonical inverted-pendulum task for reinforcement learning agents. Although the state and action spaces may not be very large here, this experiment serves as a prototype for using keras-rl in the NRP to control more complex locomotion of Roboy's myomuscle legs.   
 
 Action space: 4 muscle activation commands, left top, left bottom, right top, right bottom and outputs are specified in The State space: angle and angular velocities of both joints.
-(The sizes, shapes are stored in 'nb_actions' and 'obs_shape' respectively.) 
+(The sizes, shapes are stored in ' nb_actions ' and ' obs_shape ' respectively.) 
 
 The reward is computed as the negative sum of the angles, angle velocities, and muscle commands, for which the maximum reward is achieved when the arm stands straight up (like the inverted pendulum, and uses minimal muscle effort to do so.  
 
@@ -63,7 +63,7 @@ The networks are trained based upon the minimization of a loss function derived 
 
 A keras-rl agent usually takes the the simulation/environment as an object and updates itself while stepping through it.  In this implementation, the NRP takes the agent as an object (so to say), steps itself, and updates the agent along the way.  The roles of the stepper are reversed, as seen in this image.  
 
-()
+(https://github.com/Roboy/roboy_NRP_deep_rl/blob/master/VR-DeepRLinNRP.jpg)
 
 
 # Other Agent Parameters
