@@ -35,12 +35,12 @@ Copy `myoarm_nst_rl/` folder to the `NRP/Experiments` folder.
 
 Replace `model.sdf` in the `NRP/Models/myoarm_nst/` folder.
 
-In `initDRLAgent.py`:
+In `myoarm_nst_rl/initDRLAgent.py`:
 * Change the addsite path to that of the virtual env created. You may find more details in the corresponding tutorial for using `tensorflow` in the NRP [here](https://developer.humanbrainproject.eu/docs/projects/HBP%20Neurorobotics%20Platform/1.2/nrp/tutorials/tensorflow/tutorial.html#installing-tensorflow-for-use-in-the-nrp).
   
 * Change the path from where the saved model weights should be loaded. By default this should be the experiment folder `myoarm_nst_rl/`
 
-In `controller.py`:
+In `myoarm_nst_rl/controller.py`:
 * Change the path to where the model weights should be saved.  By default this should be the experiment folder `myoarm_nst_rl/`
 
 In order to get joint information from the simulation, replace `NRP/GazeboRosPackages/src/gazebo_muscle_plugin/` with the one here. Be aware that this plugin assumes the use of the myoarm `model.sdf` and uses string names of joints to get information.  Making this more general is a work in progress.
@@ -53,7 +53,7 @@ In order to get joint information from the simulation, replace `NRP/GazeboRosPac
 * Action space: 4 muscle activation commands - left top, left bottom, right top, right bottom
 
 * State space: angle and angular velocities of both joints
-(The sizes, shapes are stored in `nb_actions` and `obs_shape` in `initDRLAgent.py` respectively.) 
+(The sizes, shapes are stored in `nb_actions` and `obs_shape` in `myoarm_nst_rl/initDRLAgent.py` respectively.) 
 
 * Reward: computed as the negative sum of the angles, angle velocities, and muscle commands, for which the maximum reward is achieved when the arm stands straight up (like the inverted pendulum) and uses minimal muscle effort to do so 
 
