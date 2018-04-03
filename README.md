@@ -14,19 +14,19 @@ Avoid using 'sudo' to install packages in the venv.
 Make sure to isolate using '--no-site-packages'.
 
 In the virtual environment created:
-*Install tensorflow https://www.tensorflow.org/install/install_linux for Keras backend
+  *Install tensorflow https://www.tensorflow.org/install/install_linux for Keras backend
 
-*Install keras-rl https://github.com/keras-rl/keras-rl
+  *Install keras-rl https://github.com/keras-rl/keras-rl
 
-*Install h5py (required to save Keras models to disk).
-'pip install h5py'
+  *Install h5py (required to save Keras models to disk).
+  'pip install h5py'
 
 ## Workaround(s) 
 
 Protobuf Error when starting experiment in NRP
 
-'pip uninstall protobuf 
-pip install protobuf --version 3.4'
+'''pip uninstall protobuf 
+pip install protobuf --version 3.4'''
 
 
 ## Experiment related files/folders
@@ -38,12 +38,12 @@ The .bibi file specifies the transfer functions, or python scripts executed ever
 Place 'model.sdf' in the 'NRP/Models/myoarm_nst/' and replace the existing file of the same name
 
 In initDRLAgent.py:
-*Change the addsite path to that of the virtual env created. You may find more details in the corresponding tutorial for using tensorflow in the NRP [here].(https://developer.humanbrainproject.eu/docs/projects/HBP%20Neurorobotics%20Platform/1.2/nrp/tutorials/tensorflow/tutorial.html#installing-tensorflow-for-use-in-the-nrp)
+  *Change the addsite path to that of the virtual env created. You may find more details in the corresponding tutorial for using tensorflow in the NRP [here].(https://developer.humanbrainproject.eu/docs/projects/HBP%20Neurorobotics%20Platform/1.2/nrp/tutorials/tensorflow/tutorial.html#installing-tensorflow-for-use-in-the-nrp)
 
-*Change the path from where the saved model weights should be loaded. By default this should be the experiment folder 'myoarm_nst_rl/'
+  *Change the path from where the saved model weights should be loaded. By default this should be the experiment folder 'myoarm_nst_rl/'
 
 In controller.py:
-*Change the path to where the model weights should be saved.  By default this should be the experiment folder 'myoarm_nst_rl/'
+  *Change the path to where the model weights should be saved.  By default this should be the experiment folder 'myoarm_nst_rl/'
 
 In order to get joint information from the simulation, replace 'NRP/GazeboRosPackages/src/gazebo_muscle_plugin/' with the one here. Be aware that this plugin assumes the use of the myoarm **model.sdf** and uses string names of joints to get information. Making this more general is a work in progress.
 
@@ -61,14 +61,16 @@ The DDPG agent actor net takes state information as input and outputs an action 
 
 The networks are trained based upon the minimization of a loss function derived from the difference between the actual reward experienced and reward it predicts, plus a factor of entropy for exploration.
 
+A keras-rl agent usually takes the the simulation/environment as an object and updates itself while stepping through it.  In this implementation, the NRP takes the agent as an object (so to say), steps itself, and updates the agent along the way.  The roles of the stepper are reversed, as seen in this image.  
+
+()
+
+
+# Other Agent Parameters
 The agent bookkeeps with the 'SequentialMemory()' so its important to have enough declared.  
 
-keras-rl has network warm-up cycles which is ignored in this usage.
+keras-rl's network warm-up cycles are ignored in this usage.
+
 
 ## Running the experiment 
 Please refer to the NRP documentation to get it up and running and to run the experiment.  
-
-
-
- 
-
