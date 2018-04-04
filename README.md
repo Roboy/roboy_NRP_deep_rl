@@ -24,12 +24,12 @@ Protobuf Error when starting experiment in NRP:
 
 ```
 pip uninstall protobuf 
-pip install protobuf --version 3.4
+pip install protobuf==3.4
 ```
 
 ## Experiment related files/folders
 
-Copy `myoarm_nst_rl/` folder to the `NRP/Experiments` folder.
+Copy `myoarm_nst_rl/` folder to the `NRP/Experiments` folder.  
 * The `.exc` file which specifies the environment model and physics engine for the simulation.  To speed up development, the `<maturity>` attribute has been set to `production` so that the experiment shows up in the main set of NRP experiment templates.
 * The `.bibi` file specifies the transfer functions, or python scripts executed every step of the simulation.
 
@@ -43,7 +43,35 @@ In `myoarm_nst_rl/initDRLAgent.py`:
 In `myoarm_nst_rl/controller.py`:
 * Change the path to where the model weights should be saved.  By default this should be the experiment folder `myoarm_nst_rl/`
 
-In order to get joint information from the simulation, replace `NRP/GazeboRosPackages/src/gazebo_muscle_plugin/` with the one here. Be aware that this plugin assumes the use of the myoarm `model.sdf` and uses string names of joints to get information.  Making this more general is a work in progress.
+In order to get joint information from the simulation, add following lines in `NRP/GazeboRosPackages/src/gazebo_ros_muscle_interface/src/gazebo_ros_muscle_interface.cpp`:
+
+* In `void MuscleInterfacePlugin::Init()'
+
+```
+m_joint_pub = rosNode->advertise<sensor_msgs::JointState>("/jointState", 10);
+```
+
+* In `void MuscleInterfacePlugin::OnUpdateEnd(/*const common::UpdateInfo & _info*/)`
+```
+sensor_msgs::JointState msg;
+
+msg.position.push_back(m_model->GetJoint("HumerusBoneJoint")->GetAngle(0).Radian());
+msg.position.push_back(m_model->GetJoint("RadiusBoneJoint")->GetAngle(0).Radian());
+msg.velocity.push_back(m_model->GetJoint("HumerusBoneJoint")->GetVelocity(0));
+msg.velocity.push_back(m_model->GetJoint("RadiusBoneJoint")->GetVelocity(0));
+
+m_joint_pub.publish(msg);
+
+```
+Make sure the appropriate headers are there in `NRP/GazeboRosPackages/src/gazebo_ros_muscle_interface/include/gazebo_ros_muscle_interface.h`:
+
+```
+#include <gazebo/physics/opensim/OpensimJoint.hh>
+...
+#include <sensor_msgs/JointState.h>
+
+```
+This assumes the use of string names in the myoarm `model.sdf`, and making this more general is a work in progress.
 
 
 ## Setting up D-RL Agent
