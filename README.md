@@ -101,7 +101,7 @@ A `keras-rl` agent usually takes the the simulation/environment as an object and
 #### Other Agent Parameters
 The agent bookkeeps with the `SequentialMemory()` so its important to have enough declared.  
 
-`keras-rl`'s network warm-up cycles (`nb_steps_warmup_critic`, `nb_steps_warmup_actor`) are not used.
+`keras-rl`'s network warm-up cycles (`nb_steps_warmup_critic`, `nb_steps_warmup_actor`) are not fully employed.
 
 
 ## Running the experiment 
